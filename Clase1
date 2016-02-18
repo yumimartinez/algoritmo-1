@@ -1,0 +1,86 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int digito (int a)
+{
+	int s=0;
+	while (a>0){
+	a=a/10;
+	s++;
+	}
+	return s;
+}
+
+int sumadigitos (int a)
+{
+	int c, z=0;
+	while (a>0)
+	{
+		c = a%10;
+		a=a/10;
+
+		if (c%2 !=0)
+		{
+		z=z+c;
+		}
+		
+	}
+
+	return z;
+}
+
+int orden (int a)
+{
+	int d,p=0;
+	while (a>0)
+	{
+		d=a%10;
+		p=p*10+d;
+		a=a/10;
+	}
+		return p;
+	
+}
+
+		
+void main()
+{
+	int n,r,i,o,opcion;
+	do{
+		cout << endl << "Ingrese un numero: ";
+		cin >> n;
+		if (n<=0)
+			cout << "ERROR!" << endl;
+			cout << "Debe introducir un numero natural" << endl;
+			cout << "Debe ser un numero entero mayor a 0" << endl;
+	}while (n<=0);
+
+	
+
+		do{
+			cout <<endl<<endl<< "	<<***** MENU *****>>";
+			cout<< endl<< "1. Contar digitos" ;
+			cout<< endl<< "2.Sumar digitos impares";
+			cout<< endl<< "3.Invertir el numero";
+			cout<< endl<< "0.Salir";
+			cout<< endl<< "Seleccione una opcion: " << endl;
+			cin >> opcion;
+
+			switch(opcion){
+			case 1: r=digito(n);
+				cout << "El numero tiene " << r << " digitos" << endl;
+				break;
+			case 2: i=sumadigitos(n);
+				cout << "La suma de los digitos impares es: " << i << endl;
+				break;
+			case 3: o=orden(n);
+				cout << "El nuemro invertido es: " << o ;
+				break;
+			}
+		}while (opcion !=0);
+	
+	
+	getch();
+}
