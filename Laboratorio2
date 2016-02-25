@@ -1,0 +1,126 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+void psecuencia (int n)
+{
+	int i,s=1;
+	for (i=0; i<n; i++)
+	{
+		cout << s << " ";
+		s=s+2;
+	}
+}
+
+void ssecuencia (int n)
+{
+	int par=2,impar=1,i,k=0;
+	
+	for (i=0; i<n; i++)
+	{
+		if (k==0)
+		{
+			cout << par;
+			par=par+2;
+			k=1;
+		}
+		else 
+		{
+			cout << impar;
+			impar=impar+2;
+			k=0;
+		}
+	}
+
+}
+
+void tsecuencia (int n)
+{
+	int m=1,i,s=1;
+	for (i=0; i<n; i++)
+	{	
+		cout << m << " ";
+		s=s+1;
+		m=s*s;
+	}
+}
+
+void csecuencia (int n)
+{
+	int i;
+	for (i=0; i<n; i++)
+	{
+		cout << "a b c ";
+	}
+}
+
+void qsecuencia (int n)
+{
+	int k=0,i;
+	for (i=0; i<n; i++)
+	{
+		if (k==0)
+		{
+			cout << " a ";
+			k=1;
+		}
+		else
+		{
+			if (k==1)
+			{
+			cout << " b ";
+			k=2;
+			}
+			else
+			{
+				cout << " c ";
+				k=0;
+			}
+
+		}
+	}
+}
+
+void xsecuencia (int n)
+{
+	int i,s=1;
+	for (i=1; i<=n; i++)
+	{
+		cout << s << " ";
+		s=s+i;	
+	}
+}
+
+
+
+int main ()
+{
+	int a,opcion,m;
+	cout << "Ingrese un numero: ";
+	cin >> a; 
+
+	cout << endl;
+	cout << "1. Primer secuencia " << endl;
+	cout << "2. Segunda secuencia " << endl;
+	cout << "3. Tercer secuencia " << endl;
+	cout << "4. Cuarta secuencia " << endl;
+	cout << "5. Quinta secuencia" << endl;
+	cout << "6. Sexta secuencia" << endl;
+	cout << "7. Septima secuencia" << endl;
+	cin >> opcion;
+
+	switch (opcion)
+	{
+	case 1: psecuencia(a); break;
+	case 2: ssecuencia(a); break;
+	case 3: tsecuencia(a); break;
+	case 4: csecuencia(a); break;
+	case 5: qsecuencia(a); break;
+	case 6: xsecuencia(a); break;
+	case 7: m=secuencia(a);
+			cout << m; break;
+	}
+
+	getch();
+}
