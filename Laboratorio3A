@@ -1,0 +1,126 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+void cargar (int vec[],int n)
+{
+	int i;
+	for (i=0;i<n;i++)
+	{
+		cout << "Ingrese el elemento de vec[" << i << "]:";
+		cin >> vec[i];
+	}
+}
+
+void impares (int va[], int na, int vb[],int &nb)
+{
+	int i;
+	nb=0;
+	for (i=0; i<na; i++)
+	{
+		if (va[i]%2!=0)
+		{
+		vb[nb]=va[i];
+		nb++;
+		}
+	}
+}
+
+void mostrar (int vec[],int n)
+{
+	int i;
+	for (i=0;i<n;i++)
+	{
+		cout << "vec[" << i << "]:" << vec[i] << endl;
+	}
+
+}
+
+int frec(int vec[], int n, int elem)
+{
+	int i,c=0;
+	for (i=0; i<n; i++)
+	{
+		if (vec[i]==elem)
+		{
+			c++;
+		}
+	}
+	return c;
+}
+
+bool verificar (int vec[],int n, int elem)
+{
+	int i;
+	bool k=false;
+	
+	for(i=0; i<n; i++)
+	{
+		if(vec[i]==elem)
+		{
+			k=true;
+			i=n;
+		}
+	}
+	return k;
+}
+
+void ejercicio(int va[], int na, int vb[],int &nb)
+{
+	int i;
+	nb=0;
+	for(i=0; i<na; i++)
+	{
+		if((frec(va,na,va[i])>1)&&(verificar(vb,nb,va[i]))==false)
+		{
+			vb[nb]=va[i];
+			nb++;
+		}
+	}
+}
+
+void vector (int va[],int na, int vb[],int &nb)
+{
+	int i,ref=va[0];
+	for (i=0; i<na; i++)
+	{
+		if (va[i]>=ref)
+		{
+			vb[nb]=va[i];
+			nb++;
+			ref=va[i];
+		}
+	}
+}
+
+
+
+
+void main()
+{
+	int vec[100],a, vb[100],nb,f,e;
+	cout << "Ingrese un numero: ";
+	cin >> a;
+	cargar(vec,a);
+	mostrar (vec,a);
+	impares(vec, a, vb,nb);
+	cout << endl;
+	cout << "El vector es: " << endl;
+	mostrar (vb,nb);
+	cout << endl;
+	cout << "Los numeros que se repite: " << endl;
+	ejercicio(vec,a,vb,nb);
+	mostrar(vb,nb);
+	cout << endl;
+	cout << "BLAH" << endl;
+	vector (vec,a,vb,nb);
+	mostrar (vb,nb);
+
+	getch();
+}
+ //ralizar una funcion que dado un vector ya cargado debe mostrar la frecuencia de repeticion de cada elemento usando la siguiente restriccion:
+//1.solo usar un vector
+//2. no puede modificar el contenido del vector
+//3.no se puede ordenar el vector
+//4. no puede mostrar mas de una vez la frecuencia de un elemento
