@@ -1,0 +1,75 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+
+struct alumno
+{
+	char nombre[30];
+	char sexo[30];
+	int nota;
+};
+
+struct materia
+{
+	char nombremateria[30];
+	int nroalumnos;
+	alumno vecalum[20];
+};
+
+struct carrera
+{
+	char nombrecarrera[30];
+	int nromaterias;
+	materia vecmat[20];
+};
+
+using namespace std;
+
+void cargar (carrera vec[], int n)
+{
+	int i,k,q;
+	for (i=0;i<n;i++)
+	{
+		cout << "Ingrese la carrera: "<< endl;
+		do
+		{
+			gets (vec[i].nombrecarrera);
+		} while(strlen(vec[i].nombrecarreraa)==0);
+		cout << "Ingrese el numero de materias: " << endl;
+		cin >> vec[i].nromaterias;
+
+		for (k=0; k<vec[i].nromateria; k++)
+		{
+			cout << "Ingrese la materia: " << endl;
+			do
+			{
+				gets (vec[i].vecmateria[k].nombremateria);
+			}while (strlen(vec[i].vec[k].nombremateria)==0);
+			cout << "Ingrese el numero de alumnos: ";
+			cin >> vec[i].vecalumnos[k].nroalumnos;
+		for (q=0;q<vec[i].vecmateria[k].nombremateria;q++)
+		{
+			cout << "Ingrese el nombre del estudiante: " << endl;
+			do
+			{
+			gets (vec[i].vecmateria[k].vecnombre[q].nombre);
+			}while(strlen(vec[i].vecmateria[k].vecnombre[q].nombre)==0);
+			cout << "Ingrese el sexo: " << endl;
+			cin >> vec[i].vecmateria[k].vecnombre[q].sexo;
+			cout << "Ingrese la nota: " << endl;
+			cin >> vec[i].vecmateria[k].vecnombre[q].nota;
+		}
+		}
+	}
+}
+
+
+void main()
+{
+	carrera vecuniversidad [20];
+	int nrocarreras;
+	cout << "Numero de carreras: ";
+	cin >> nrocarreras;
+	cargar(vecuniversidad,nrocarreras);
+	getch();
+}
