@@ -1,0 +1,75 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+#define FIL 20
+#define COL 60
+
+char pantalla[FIL][COL];
+
+void limpiar ()
+{
+	int i,j;
+	for (i=0; i<FIL; i++)
+	{
+		for (j=0; j<COL; j++)
+		{
+			pantalla[i][j]=' ';
+		}
+	}
+}
+
+void mostrar ()
+{
+	int i,j;
+	for (i=0; i<FIL; i++)
+	{
+		for (j=0; j<COL; j++)
+		{
+			cout << pantalla[i][j];
+		}
+		cout << endl;
+	}
+}
+
+void linea_horizontal (int x1, int y1, int x2, int y2)
+{
+	int i;
+	for (i=y1; i<y2;i++)
+	{
+		pantalla[x1][i]=char (196);
+	}
+}
+
+void linea_vertical (int x1, int y1, int x2, int y2)
+{
+	int i;
+	for (i=x1; i<x2; i++)
+	{
+		pantalla[i][y1]=char (179);
+	}
+}
+
+void dib_caja (int x1, int y1, int x2, int y2)
+{
+	linea_horizontal (x1,y1,x1,y2);
+	linea_horizontal (x2,y1,x2,y2);
+	linea_vertical(x1,y1,x2,y1);
+	linea_vertical(x1,y2,x2,y2);
+	pantalla[x1][y1]=char(218);
+	pantalla[x1][y2]=char(191);
+	pantalla[x2][y1]=char(192);
+	pantalla[x2][y2]=char(217);
+
+}
+
+
+void main()
+{
+	limpiar();
+	dib_caja (5,9,15,21);
+	dib_caja (7,10,19,26);
+	mostrar();
+	getch();
+}
