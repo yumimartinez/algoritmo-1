@@ -1,0 +1,67 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#define FIL 10
+#define COL 10
+
+using namespace std;
+
+void cargar (int mat[FIL][COL], int m, int n)
+{
+	int i,j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			cout << "Ingrese el numero: ";
+			cin >> mat[i][j];
+		}
+	}
+}
+
+void mostrar (int mat[FIL][COL], int m, int n)
+{
+	int i,j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			cout << mat[i][j] << " ";
+		}cout << endl;
+	}
+	
+}
+
+void matriztranspuesta (int mat[FIL][COL], int n, int m)
+{
+	int i,j,a,b;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			if (j>i)
+			{
+				b=mat[i][j];
+				mat[i][j]=mat[j][i];
+				mat[j][i]=b;
+			}
+		}
+	}
+}
+
+void main()
+{
+	int f,c;
+	int mat[FIL][COL];
+	cout << "Ingrese el numero de filas: ";
+	cin >> f;
+	cout << "Ingrese el numero de columnas: ";
+	cin >> c;
+	cargar (mat,f,c);
+	mostrar (mat,f,c);
+	cout << endl;
+	matriztranspuesta(mat,f,c);
+	mostrar (mat,f,c);
+
+getch();
+}
