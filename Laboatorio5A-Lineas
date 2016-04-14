@@ -1,0 +1,62 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+#define FIL 20
+#define COL 60
+
+char pantalla[FIL][COL];
+
+void limpiar ()
+{
+	int i,j;
+	for (i=0; i<FIL; i++)
+	{
+		for (j=0; j<COL; j++)
+		{
+			pantalla[i][j]=' ';
+		}
+	}
+}
+
+void mostrar ()
+{
+	int i,j;
+	for (i=0; i<FIL; i++)
+	{
+		for (j=0; j<COL; j++)
+		{
+			cout << pantalla[i][j];
+		}
+		cout << endl;
+	}
+}
+
+void linea_horizontal (int x1, int y1, int x2, int y2)
+{
+	int i;
+	for (i=y1; i<y2;i++)
+	{
+		pantalla[x1][i]=char (196);
+	}
+}
+
+void linea_vertical (int x1, int y1, int x2, int y2)
+{
+	int i;
+	for (i=x1; i<x2; i++)
+	{
+		pantalla[i][y1]=char (179);
+	}
+}
+
+void main()
+{
+	limpiar();
+	linea_horizontal (15,6,5,25);
+	linea_vertical (6,40,8,19);
+	mostrar();
+	getch();
+
+}
