@@ -1,0 +1,95 @@
+#include <iostream>
+#include <conio.h>
+#define FIL 10
+#define COL 10
+
+using namespace std;
+
+void cargar (int mat[FIL][COL], int n, int m)
+{
+	int i,j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			cout << "Ingrese el elemento: ";
+			cin >> mat[i][j];
+		}
+	}
+}
+
+void mostrar (int mat[FIL][COL], int n, int m)
+{
+	int i,j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			cout << mat[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+bool verifprimo (int n)
+{
+	bool k=true;
+	int i;
+	for (i=2; i<n; i++)
+	{
+		if(n%i==0)
+		{
+			k=false;
+		}
+	}
+	return k;
+}
+
+void eliminarfila (int mat[FIL][COL], int n, int m)
+{
+	bool k=true;
+	int i,j,w;
+	for (i=0; i<n; i++)
+	{
+		k=true;
+		for (j=0; j<m; j++)
+		{
+			if (verifprimo(mat[i][j])==false)
+			{
+				k=false;
+			}
+		}
+		if (k==true)
+		{
+			for (w=i; w<n-1; w++)
+			{
+				for (j=0; j<n; j++)
+				{
+					mat[w][j]=mat[w+1][j];
+
+				}
+				
+			}
+			n--;
+			i--;
+		}
+	}
+
+}
+
+void main()
+{
+	int f,c;
+	int mat[FIL][COL];
+	cout << "Ingrese el numero de filas: ";
+	cin >> f;
+	cout << "Ingrese el numero de columnas: ";
+	cin >> c;
+	cargar(mat,f,c);
+	mostrar(mat,f,c);
+	cout << "Su matriz es: " << endl;
+	eliminarfila(mat,f,c);
+	mostrar(mat,f,c);
+
+	getch();
+}
