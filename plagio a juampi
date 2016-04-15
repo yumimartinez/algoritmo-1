@@ -1,0 +1,52 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+
+
+using namespace std;
+
+void cargar (char nombre[], int n)
+{
+	int i;
+
+	for (i=0; i<n; i++)
+	{
+		
+		cin >> nombre[i];
+	}
+}
+
+void mostrar (char nombre[], int n)
+{
+	int i;
+	for (i=0; i<n; i++)
+	{
+		cout << nombre[i];
+	}
+}
+
+void invertir (char nombre[], int n)
+{
+
+	int i,aux;
+	for (i=0; i<n/2; i++)
+	{
+		aux=nombre[i];
+		nombre[i]=nombre[n-1-i];
+		nombre[n-1-i]=aux;
+	}
+}
+
+void main()
+{
+	int n;
+	char nombre [100];
+	cout << "Ingrese el tamaño: ";
+	cin >> n;
+	cout << "Ingrese la cadena: ";
+	cargar (nombre,n);
+	invertir (nombre,n);
+	mostrar (nombre, n);
+
+getch();
+}
