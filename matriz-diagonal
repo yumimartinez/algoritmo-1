@@ -1,0 +1,60 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#define FIL 10
+#define COL 10
+
+
+using namespace std;
+
+void cargar_diagonal(int mat[FIL][COL],int n){
+int i,c = 0,f = 0,d = 1;
+while(f < n){
+	for(i = f;i >= 0;i--){
+		mat[i][c] = d;
+		d++;
+		c++;
+		}
+	f++;
+	c = 0;
+	}
+c++;
+f = n-1;
+while(c < n){
+	for(i = c;i < n;i++){
+		mat[f][i] = d;
+		d++;
+		f--;
+		}
+	f = n-1;
+	c++;
+	}
+}
+
+void mostrar(int mat[FIL][COL],int n)
+{
+	int i,j;
+	for(i = 0;i < n;i++)
+	{
+		for(j = 0;j < n;j++)
+		{
+			cout << mat[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void main ()
+{
+	int b,c=0;
+	int mat[FIL][COL];
+	cout << "Ingrese el tamaño (n): " << endl;
+	cin >> b;
+	c=b;
+	cout << endl;
+	cout << "La matriz es: " << endl;
+	cargar_diagonal (mat,b);
+	mostrar (mat,b);
+
+getch();
+}
