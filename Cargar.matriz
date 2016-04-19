@@ -1,0 +1,60 @@
+#include <iostream>
+#include <conio.h>
+#define FIL 10
+#define COL 10
+
+struct tmatriz
+{
+	int mat[FIL][COL];
+};
+
+using namespace std;
+
+void cargar (tmatriz vec[], int a)
+{
+	int i,j,s=1;
+	for (i=0; i<a; i++)
+	{
+		for (j=0; j<a; j++)
+		{
+			vec[i].mat[j][j]=s;
+			s++;
+		}
+	}
+	for (i=0; i<a; i++)
+	{
+		for (j=0; j<a; j++)
+		{
+			if(i>j)
+			{
+				vec[i].mat[i][j]=s;
+				s++;
+			}
+		}
+	}
+
+	for (i=0; i<a; i++)
+	{
+		for (j=0; j<a; j++)
+		{
+			if (i<j)
+			{
+				vec[i].mat[i][j]=s;
+				s++;
+			}
+		}
+	}
+}
+
+
+
+void main()
+{
+	int b;
+	tmatriz vec[10];
+	cout << "Ingrese el tamaño del vector: ";
+	cin >> b;
+	cargar (vec,b);
+
+getch();
+}
