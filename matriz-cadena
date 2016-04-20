@@ -1,0 +1,114 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#define FIL 10
+#define COL 10
+
+struct palabras
+{
+	char vecA[50];
+};
+
+
+using namespace std;
+
+void cargar (palabras mat[FIL][COL], int n, int m)
+{
+	int i,j,k;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			cout << "Ingrese la palabra: ";
+			cin >> mat[i][j].vecA;
+		}
+	}
+
+}
+
+void mostrar (palabras mat[FIL][COL], int n, int m)
+{
+	int i,j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			cout << mat[i][j].vecA << " ";
+			
+		}
+		cout << endl;
+	}
+
+}
+
+bool palabra_capicua (char cad[])
+{
+	int i,n=strlen(cad);
+	bool k=true;
+	for (i=0; i<n/2; i++)
+	{
+		if (cad[i]!=cad[n-i-1])
+		{
+			k=false;
+		}
+	}
+	return k;
+}
+bool palabra_repetida (palabras vec[], char cad[], int nvec)
+{
+	int i;
+	bool k=false;
+	for (i=0; i<nvec; i++)
+	{
+		if (strcmp(vec[i].vecA,cad)==0)
+		{
+			k=true;
+		}
+	}
+	return k;
+}
+
+void cargar_vector (palabras mat[FIL][COL], int n, int m,  palabras vec[], int &nvec)
+{
+	int i,j;
+	nvec=0;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<m; j++)
+		{
+			if ((palabra_capicua(mat[i][j].vecA)==true)&&(palabra_repetida(vec,mat[FIL][COL].vecA,nvec)==false))
+			{
+				strcpy(vec[nvec].vecA,mat[i][j].vecA);
+				nvec++;
+			}
+		}
+	}			
+}
+
+void mostrar_vector (palabras mat[FIL][COL], int n, int m, palabras vec[], int nvec)
+{
+	int i,j;
+	nvec=0;
+	for (i=0; i<n; i++)
+	{
+		cout << vec[i].vecA << " ";
+	}
+	cout << endl;
+}
+void main()
+{
+	int a,b,c;
+	palabras mat[FIL][COL], vec[50];
+	cout << "Ingrese el numero de filas: ";
+	cin >> a;
+	cout << "Ingrese el numero de columnas: ";
+	cin >> b;
+	cargar(mat,a,b);
+	mostrar(mat,a,b);
+	cout << endl;
+	cargar_vector(mat,a,b,vec,c);
+	mostrar_vector (mat,a,b,vec,c);
+
+
+getch();
+}
