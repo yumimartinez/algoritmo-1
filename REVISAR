@@ -1,0 +1,65 @@
+#include<iostream>
+#include <conio.h>
+#define FIL
+#define COL
+
+struct tvector
+{
+	int vecA[50];
+	int nvec;
+};
+
+using namespace std;
+
+void cargar (tvector mat[FIL][COL], int n, int m)
+{
+	int i,j,k;
+	for (i=0; i<n; i++)
+	{
+		for (j=0;j<m; j++)
+		{
+			cout << "Ingrese el tamaño del vector: ";
+			cin >> mat[i][j].nvec;
+			
+			for (k=0; k<mat[i][j].nvec; k++)
+			{
+				cout << "Ingrese el elemento: ";
+				cin >> mat[i][j].vecA[k];
+			}
+		}
+	}
+}
+
+void mostrar (tvector mat[FIL][COL], int n, int m)
+{
+	int i,j,k;
+	for (i=0; i<n; i++)
+	{
+		for (j=0;j<m; j++)
+		{	
+			for (k=0; k<mat[i][j].nvec; k++)
+			{
+				cout <<  mat[i][j].vecA[k] << " ";
+			}
+			cout << endl;
+		}
+	}
+}
+
+
+void main()
+{
+	int a,b;
+	tvector mat[FIL][COL];
+	cout << "Ingrese el numero de filas: ";
+	cin >> a;
+	cout << "Ingrese el numero de columnas: ";
+	cin >> b;
+
+	cargar (mat,a,b);
+	mostrar (mat,a,b);
+
+
+
+getch();
+}
