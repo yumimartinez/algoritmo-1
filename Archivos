@@ -13,10 +13,17 @@ struct regAmigos
 
 using namespace std;
 
-void main()
+void crear_archivos(char nomArchivo[])
 {
-	regAmigos reg;
 	FILE *ptr;
+	ptr=fopen ("amigos.dat", "ab");
+	fclose(ptr);
+}
+
+void addamigo()
+{	
+	FILE *ptr;
+	regAmigos reg;
 	cout << "Ingrese el nombre: ";
 	do{
 	gets(reg.nombre);
@@ -32,10 +39,17 @@ void main()
 
 	reg.estado = 'A';
 
-	ptr=fopen ("amigos.dat", "wb");
+	ptr=fopen ("amigos.dat", "ab");
 	fwrite(&reg,sizeof(reg),1,ptr);
 	fclose(ptr);
 
+}
+
+void main()
+{
+	crear_archivos("amigos.dat");
+	addamigo();
 
 getch();
 }
+
