@@ -1,0 +1,41 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+struct regAmigos
+{
+	char nombre[50];
+	char sexo;
+	int edad;
+	char estado;
+};
+
+using namespace std;
+
+void main()
+{
+	regAmigos reg;
+	FILE *ptr;
+	cout << "Ingrese el nombre: ";
+	do{
+	gets(reg.nombre);
+	}while(strlen(reg.nombre)==0);
+	do{
+	cout << "Ingrese el sexo: ";
+	cin >> reg.sexo;
+	}while ((reg.sexo !='f')&&(reg.sexo !='m')&&(reg.sexo !='M')&&(reg.sexo !='F'));
+	do{
+	cout << "Ingrese la edad: ";
+	cin >> reg.edad;
+	}while ((reg.edad<0)||(reg.edad>151));
+
+	reg.estado = 'A';
+
+	ptr=fopen ("amigos.dat", "wb");
+	fwrite(&reg,sizeof(reg),1,ptr);
+	fclose(ptr);
+
+
+getch();
+}
