@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <conio.h>
 #include <string.h>
@@ -48,15 +49,15 @@ using namespace std;
 
 void archivo_producto (char nomArchivo[])
 {
-	FILE *ptr1;
-	ptr1=fopen("producto", "ab");
+	FILE*ptr1;
+	ptr1=fopen("producto.dat", "ab");
 	fclose(ptr1);
 }
 
 void archivo_cliente (char nomArchivo[])
 {
 	FILE*ptr2;
-	ptr2=fopen("cliente", "ab");
+	ptr2=fopen("cliente.dat", "ab");
 	fclose (ptr2);
 }
 
@@ -70,52 +71,57 @@ void archivo_vendedor (char nomArchivo[])
 void archivo_automovil (char nomArchivo[])
 {
 	FILE*ptr4;
-	ptr4=fopen("automovil", "ab");
+	ptr4=fopen("automovil.dat", "ab");
 	fclose (ptr4);
 }
 
 void archivo_bomba (char nomArchivo[])
 {
 	FILE*ptr5;
-	ptr5=fopen("bomba", "ab");
+	ptr5=fopen("bomba.dat", "ab");
 	fclose (ptr5);
 }
 
 void archivo_compra (char nomArchivo[])
 {
 	FILE*ptr6;
-	ptr6=fopen("compra","ab");
+	ptr6=fopen("compra.dat","ab");
 	fclose (ptr6);
 }
 
 void archivo_venta  (char nomArchivo[])
 {
 	FILE*ptr7;
-	ptr7=fopen("venta", "ab");
+	ptr7=fopen("venta.dat", "ab");
 	fclose (ptr7);
 }
 
-void producto ()
+void producto_datos ()
 {	
 	
 	FILE*ptr1;
 	producto prod;
-	cout << "Codigo ";
+	cout << "Codigo: ";
 	cin >> prod.IdProd;
-	cout << "Cliente ";
-	cin >> prod.nombre;
-	cout << "Precio ";
+	cout << "Cliente: ";
+	do
+	{
+	gets (prod.nombre);
+	}while(strlen(prod.nombre)==0);
+	
+	do{
+	cout << "Precio: ";
 	cin >> prod.precio;
-	ptr1=fopen("producto","ab");
+	}while(prod.precio<=0);
+	ptr1=fopen("producto.dat","ab");
 	fwrite (&prod,sizeof(prod),1,ptr1);
 	fclose (ptr1);
 }
 
-
-
 void main()
 {
 	archivo_producto ("producto");
+	producto_datos();
 	archivo_cliente ("cliente");
 	archivo_vendedor ("vendedor");
 	archivo_automovil ("automovil");
