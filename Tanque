@@ -1,0 +1,115 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <stdio.h>
+
+struct producto
+{
+	int IdProd;
+	char nombre[30];
+	int stock;
+	float precio;
+};
+
+struct cliente 
+{
+	int IdVenta;
+	char nombre[30];
+	char NIT;
+	char email[30];
+};
+
+struct automovil
+{
+	int IdAuto;
+	char placa[12];
+	int IdCliente;
+};
+
+struct bomba
+{
+	int IdBomba;
+	char descripcion[12];
+	int IdProd;
+	int IdVenta;
+};
+
+struct compra
+{
+	int IdCompra;
+	char fecha[10];
+	int cantidad;
+	float precioUnitario;
+	int IdBomba;
+	int IdAuto;
+};
+
+using namespace std;
+
+void archivo_producto (char nomArchivo[])
+{
+	FILE *ptr1;
+	ptr1=fopen("producto", "ab");
+	fclose(ptr1);
+}
+
+void archivo_cliente (char nomArchivo[])
+{
+	FILE*ptr2;
+	ptr2=fopen("cliente", "ab");
+	fclose (ptr2);
+}
+
+void archivo_vendedor (char nomArchivo[])
+{
+	FILE*ptr3;
+	ptr3=fopen("vendedor", "ab");
+	fclose (ptr3);
+}
+
+void archivo_automovil (char nomArchivo[])
+{
+	FILE*ptr4;
+	ptr4=fopen("automovil", "ab");
+	fclose (ptr4);
+}
+
+void archivo_bomba (char nomArchivo[])
+{
+	FILE*ptr5;
+	ptr5=fopen("bomba", "ab");
+	fclose (ptr5);
+}
+
+void archivo_compra (char nomArchivo[])
+{
+	FILE*ptr6;
+	ptr6=fopen("compra","ab");
+	fclose (ptr6);
+}
+
+void archivo_venta  (char nomArchivo[])
+{
+	FILE*ptr7;
+	ptr7=fopen("venta", "ab");
+	fclose (ptr7);
+}
+
+
+
+
+
+
+
+void main()
+{
+	archivo_producto ("producto");
+	archivo_cliente ("cliente");
+	archivo_vendedor ("vendedor");
+	archivo_automovil ("automovil");
+	archivo_bomba ("bomba");
+	archivo_compra ("compra");
+	archivo_venta ("venta");
+
+getch();
+}
