@@ -10,14 +10,25 @@ struct producto
 	char nombre[30];
 	int stock;
 	float precio;
+	char estado;
 };
 
 struct cliente 
 {
-	int IdVenta;
+	int IdCliente;
 	char nombre[30];
 	char NIT;
 	char email[30];
+	char estado;
+};
+
+struct vendedor
+{
+	int IdVendedor;
+	char nombre[30];
+	char telefono[15];
+	char email[30];
+	char estado;
 };
 
 struct automovil
@@ -25,6 +36,7 @@ struct automovil
 	int IdAuto;
 	char placa[12];
 	int IdCliente;
+	char estado;
 };
 
 struct bomba
@@ -33,6 +45,7 @@ struct bomba
 	char descripcion[12];
 	int IdProd;
 	int IdVenta;
+	char estado;
 };
 
 struct compra
@@ -40,70 +53,86 @@ struct compra
 	int IdCompra;
 	char fecha[10];
 	int cantidad;
+	int IdProd;
+};
+
+struct venta
+{
+	int IdVenta;
+	char fecha[10];
+	int cantidad;
 	float precioUnitario;
 	int IdBomba;
 	int IdAuto;
+	char estado;
 };
 
 using namespace std;
 
 void archivo_producto (char nomArchivo[])
 {
-	FILE*ptr1;
-	ptr1=fopen("producto.dat", "ab");
-	fclose(ptr1);
+	FILE*ptr;
+	ptr=fopen("producto.dat", "ab");
+	fclose(ptr);
 }
 
 void archivo_cliente (char nomArchivo[])
 {
-	FILE*ptr2;
-	ptr2=fopen("cliente.dat", "ab");
-	fclose (ptr2);
+	FILE*ptr;
+	ptr=fopen("cliente.dat", "ab");
+	fclose (ptr);
 }
 
 void archivo_vendedor (char nomArchivo[])
 {
-	FILE*ptr3;
-	ptr3=fopen("vendedor", "ab");
-	fclose (ptr3);
+	FILE*ptr;
+	ptr=fopen("vendedor.dat", "ab");
+	fclose (ptr);
 }
 
 void archivo_automovil (char nomArchivo[])
 {
-	FILE*ptr4;
-	ptr4=fopen("automovil.dat", "ab");
-	fclose (ptr4);
+	FILE*ptr;
+	ptr=fopen("automovil.dat", "ab");
+	fclose (ptr);
 }
 
 void archivo_bomba (char nomArchivo[])
 {
-	FILE*ptr5;
-	ptr5=fopen("bomba.dat", "ab");
-	fclose (ptr5);
+	FILE*ptr;
+	ptr=fopen("bomba.dat", "ab");
+	fclose (ptr);
 }
 
 void archivo_compra (char nomArchivo[])
 {
-	FILE*ptr6;
-	ptr6=fopen("compra.dat","ab");
-	fclose (ptr6);
+	FILE*ptr;
+	ptr=fopen("compra.dat","ab");
+	fclose (ptr);
 }
 
 void archivo_venta  (char nomArchivo[])
 {
-	FILE*ptr7;
-	ptr7=fopen("venta.dat", "ab");
-	fclose (ptr7);
+	FILE*ptr;
+	ptr=fopen("venta.dat", "ab");
+	fclose (ptr);
 }
 
+//MENU
+
+
+
+
+
+// AÑADIR
 void producto_datos ()
 {	
 	
-	FILE*ptr1;
+	FILE*ptr;
 	producto prod;
-	cout << "Codigo: ";
+	cout << "ID producto: ";
 	cin >> prod.IdProd;
-	cout << "Cliente: ";
+	cout << "Producto: ";
 	do
 	{
 	gets (prod.nombre);
@@ -113,21 +142,210 @@ void producto_datos ()
 	cout << "Precio: ";
 	cin >> prod.precio;
 	}while(prod.precio<=0);
-	ptr1=fopen("producto.dat","ab");
-	fwrite (&prod,sizeof(prod),1,ptr1);
-	fclose (ptr1);
+	prod.estado = 'A';
+
+	ptr=fopen("producto.dat","ab");
+	fwrite (&prod,sizeof(prod),1,ptr);
+	fclose (ptr);
 }
+
+void cliente_datos()
+{
+	FILE*ptr;
+	cliente client;
+	cout << endl;
+	do
+	{
+	cout << "ID cliente: ";
+	cin >> client.IdCliente;
+	}while (client.IdCliente<0);
+	cout << "Nombre: ";
+	do
+	{
+	gets (client.nombre);
+	} while (strlen(client.nombre)==0);
+	cout << "E-mail: ";
+	cin >> client.email;
+	client.estado='A';
+
+	ptr=fopen("cliente.dat","ab");
+	fwrite (&client,sizeof(client),1,ptr);
+	fclose (ptr);
+}
+
+void vendedor_datos()
+{
+	FILE*ptr;
+	vendedor vend;
+	cout << endl;
+	do
+	{
+	cout << "ID vendedor: ";
+	cin >> vend.IdVendedor;
+	}while (vend.IdVendedor<0);
+	cout << "Nombre: ";
+	do
+	{
+	gets (vend.nombre);
+	}while(strlen(vend.nombre)==0);
+	cout << "Telefono: ";
+	cin >> vend.telefono;
+	cout << "E-mail: ";
+	cin >> vend.email;
+	vend.estado='A';
+	ptr=fopen("vendedor.dat", "ab");
+	fwrite (&vend, sizeof(vend),1,ptr);
+	fclose (ptr);
+}
+
+void automovil_datos()
+{
+	FILE*ptr;
+	automovil autom;
+	cout << endl;
+	do
+	{
+	cout << "ID automovil: ";
+	cin >> autom.IdAuto;
+	}while(autom.IdAuto<0);
+	cout << "Placa: ";
+	cin >> autom.placa;
+	do
+	{
+	cout << "ID cliente: ";
+	cin >> autom.IdCliente;
+	}while(autom.placa<0);
+	autom.estado='A';
+	ptr=fopen("automovil.dat","ab");
+	fwrite(&autom,sizeof(autom),1,ptr);
+	fclose (ptr);
+}
+
+
+void bomba_datos ()
+{
+	FILE*ptr;
+	bomba bom;
+	do
+	{
+	cout <<"ID bomba: ";
+	cin >> bom.IdBomba;
+	}while(bom.IdBomba<0);
+	cout << "Descripcion: ";
+	cin >> bom.descripcion;
+	do
+	{
+	cout << "ID producto: ";
+	cin >> bom.IdProd;
+	}while (bom.IdProd<0);
+	do
+	{
+	cout << "ID venta: ";
+	cin >> bom.IdVenta;
+	}while (bom.IdVenta<0);
+	bom.estado ='A';
+	ptr=fopen("bomba.dat","ab");
+	fwrite(&bom,sizeof(bom),1,ptr);
+	fclose (ptr);
+}
+
+void compra_datos()
+{
+	FILE*ptr;
+	compra comp;
+	cout << endl;
+	do
+	{
+	cout << "ID compra: ";
+	cin >> comp.IdCompra;
+	}while (comp.IdCompra<0);
+	//COMPLICADO!!!!!!!!
+	cout << "Fecha: ";
+	cin >> comp.fecha;
+	do
+	{
+	cout << "Cantidad: ";
+	cin >> comp.cantidad;
+	}while (comp.cantidad<0);
+	cout << "ID prod: ";
+	cin >> comp.IdProd;
+	comp.IdProd='A';
+	ptr=fopen("compra.dat","ab");
+	fwrite(&comp,sizeof(comp),1,ptr);
+	fclose (ptr);
+}
+
+void venta_datos()
+{
+	FILE*ptr;
+	venta ven;
+	cout << endl;
+	do
+	{
+	cout << "ID venta: ";
+	cin >> ven.IdVenta;
+	}while(ven.IdVenta<0);
+	cout << "Fecha: ";
+	cin >> ven.fecha;
+	do
+	{
+	cout << "Cantidad: ";
+	cin >> ven.cantidad;
+	}while (ven.cantidad<0);
+	do
+	{
+	cout << "Precio unitario: ";
+	cin >> ven.precioUnitario;
+	}while (ven.precioUnitario<0);
+	do
+	{
+	cout << "ID bomba: ";
+	cin >> ven.IdBomba;
+	}while (ven.IdBomba<0);
+	do
+	{
+	cout << "Id auto: ";
+	cin >> ven.IdAuto;
+	}while (ven.IdAuto<0);
+	ven.estado='A';
+	ptr= fopen("venta.dat","ab");
+	fwrite (&ven,sizeof(ven),1,ptr);
+	fclose (ptr);
+}
+
+// BORRAR
+
+
+
+
 
 void main()
 {
-	archivo_producto ("producto");
-	producto_datos();
-	archivo_cliente ("cliente");
-	archivo_vendedor ("vendedor");
-	archivo_automovil ("automovil");
-	archivo_bomba ("bomba");
-	archivo_compra ("compra");
-	archivo_venta ("venta");
+	int opcion;
+	cout << " LA LA LA LA LA " << endl;
+	cout << "1. Añadir " << endl;
+	cout << "2. Borrar: " << endl;
+	cout << "3. Modificar: " << endl;
+	cin >> opcion;
 
+	switch (opcion)
+	{
+		case 1:
+			archivo_producto ("producto");
+			producto_datos();
+			archivo_cliente ("cliente");
+			cliente_datos();
+			archivo_vendedor ("vendedor");
+			vendedor_datos();
+			archivo_automovil ("automovil");
+			automovil_datos();
+			archivo_bomba ("bomba");
+			bomba_datos();
+			archivo_compra ("compra");
+			compra_datos();
+			archivo_venta ("venta");
+			venta_datos();
+	}
+	
 getch();
 }
