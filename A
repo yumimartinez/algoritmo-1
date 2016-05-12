@@ -1,0 +1,22 @@
+
+bool verifExisteProducto(int p)
+{
+	bool k=false;
+	FILE*ptr;
+	producto reg;
+	ptr=fopen("prducto.dat","rb");
+	if(ptr!=NULL)
+	{
+		fread(&reg,sizeof(reg),1,ptr);
+		while((feof(ptr)==false)&&(k==false))
+		{
+			if(reg.IdProd==p)
+			{
+				k=true;
+			}
+			fread(&reg,sizeof(reg),1,ptr);
+		}
+		fclose(ptr);
+	}
+	return k;
+}
