@@ -3,6 +3,12 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include<windows.h>
+#include <math.h>
+#include <iomanip>
+#include <cmath>
+# define final 1
+#define N 50
 #define MAX 100
 
 //ESTRUCTURAS
@@ -42,7 +48,7 @@ struct bomba
 	int IdBomba;
 	char descripcion[12];
 	int IdProd;
-	int IdVenta;
+	int IdVendedor;
 	char estado;
 };
 struct compra
@@ -61,11 +67,11 @@ struct venta
 	float precioUnitario;
 	int IdBomba;
 	int IdAuto;
+	int IdProd;
 	char estado;
 };
 
 using namespace std;
-
 
 //CARATULA
 void cargar_letra(char logo[][MAX], char c, int pos, int &width)
@@ -233,6 +239,53 @@ void archivo_venta  (char nomArchivo[])
 }
 
 //VALIDACIONES
+bool VerifSoloNumeros(char cad[])
+{
+	int i;
+	bool k;
+	k=true;
+	i=0; 
+	while(i<strlen(cad)&&k==true)
+	{
+		if(cad[i]>='0'&& cad[i]<='9')
+		{
+			i++;
+		}
+		else
+		{
+			k=false;
+		}
+	}
+	if(strlen(cad)==0)
+	{
+		k=false;
+	}
+	return(k);
+
+}
+bool VerifSoloLetras(char cad[])
+{
+	int i;
+	bool k;
+	k=true;
+	i=0; 
+	while(i<strlen(cad)&&k==true)
+	{
+		if(isalpha(cad[i])!=0 || cad[i]==' ')
+		{
+			i++;
+		}
+		else
+		{
+			k=false;
+		}
+		if(cad[0]==' ')
+		{
+			k=false;
+		}
+	}
+	return(k);
+}
 bool validar_email(char cad[30]) 
 { 
 	int n=strlen(cad),i,arr=0,punto=0; 
@@ -295,25 +348,256 @@ bool validar_telefono(char cad[12] )
 	}
  return(k);
 }
-bool verificar_numero(char cad[])
+int verificarNumero_Placa(char num)
 {
-	bool k;
-	k=true;
-	int i=0;
-	if((cad[i]='0')&&(cad[i]='9'))
+	if(num==48|| num==49|| num==50||num==51||num==52||num==53|| num==54||num==55||num==56||num==57)
 	{
-		i++;
+		return(1);	
 	}
 	else
 	{
-		k=false;
+		return(0);	
 	}
-	if(strlen(cad)==0)
+}
+int verificarPalabra_Placa (char num)
+{  
+	if(num==97||num==98||num==99||num==100||num==101||num==102||num==103||num==104||num==105||num==106||num==107||num==108||num==109||num==110||num==111||num==112||num==113||num==114||num==115||num==116||num==117||num==118||num==119||num==120||num==121||num==122)
 	{
-		k=false;
+			 return(1);	
+	}
+	else
+	{
+		return(0);	
+	}
+}
+int verificar_placa(char idVehiculo[])
+{
+	int i,b,c,j,a=0, 
+	n=strlen(idVehiculo);
+	if(n==7)
+    {  
+		for(i=0;i<4;i++)
+        {
+			b=verificarNumero_Placa(idVehiculo[i]);
+			if(b==0)
+            {
+				i=4;
+				return(a);
+			}
+           }
+		for(j=4;j<n;j++)
+		{ 
+			c=verificarPalabra_Placa(idVehiculo[j]);
+			if(c==0)
+			{ 
+				j=n;
+				return(a); 
+			}
+			else
+			{
+				a=1;
+				return(a);
+			}
+		}
+   }
+}
+
+//FECHA
+void ValidarFecha()
+{  
+	int d,m,y;
+	char dc[N],mc[N],yc[N];
+	bool bisiesto = false;  
+	do
+	{
+		cout << "Introduce el dia: ";  
+		cin >> dc;
+	}while(VerifSoloNumeros(dc)==false);
+	do
+	{
+		cout << "Introduce el mes: ";  
+		cin >> mc; 
+	}while(VerifSoloNumeros(mc)==false);
+	do
+	{
+		cout << "Introduce el año: ";  
+		cin >> yc;
+	}while(VerifSoloNumeros(yc)==false);
+	d=atoi(dc);
+	m=atoi(mc);
+	y=atoi(yc);
+	//comprobamos si el año es bisiesto  
+	if(y%4==0 && y%100!=100 || y%400==0)  
+		bisiesto = true;  
+
+	//comprobamos que los datos ingresados esten en un rango valido  
+	if(d>0 && d<32 && m>0 && m<13 && y>0){  
+		if(m==1 || m==3 || m==5 || m==7 || m==8 || m==10 || m==12)  
+		{  
+			cout << "\nFecha valida";  
+		}  
+		else  
+		{  
+			if(m==2 && d<30 && bisiesto)  
+				cout << "\nFecha valida";  
+			else if(m==2 && d<29 && !bisiesto)  
+				cout << "\nFecha valida";  
+			else if(m!=2 && d<31)  
+				cout << "\nFecha valida";  
+			else  
+				cout << "\nFecha no valida";  
+		}  
+	}  
+	else  
+		cout << "\nFecha no valida";  
+} 
+int FechaAño() 
+{
+	time_t tSac = time(NULL);  // instante actual
+	struct tm* pt1 = localtime (&tSac);
+	return((pt1->tm_year+1900));
+
+}
+int FechaMes()
+{
+	time_t tSac = time(NULL);  // instante actual
+
+	struct tm* pt1 =localtime (&tSac);
+	return((pt1->tm_mon+1));
+
+}
+int FechaDia() 
+{
+	time_t tSac = time(NULL);  // instante actual
+
+	struct tm* pt1 =localtime (&tSac);
+	return((pt1->tm_mday));
+
+}
+bool validar_fecha(int dia,int mes,int anho)
+{
+	if(mes>12||mes<0||
+		dia>31||dia<0||
+		(dia>30 && mes>7 && mes%2 == 1)||
+		(dia>30 && mes<7 && (mes%2 == 0))||
+		(dia>29 && mes==2 && ((anho%4 == 0) || ((anho%100 > 0) && (anho%400 == 0)) ) ) ||
+		(dia>28 && mes==2 && (anho%4 >0) || ( (anho%100 == 0) && (anho%400 > 0)) ) )
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+bool generar_fecha(char fecha[11])
+{
+	cout<<"Fecha:";
+	gets(fecha);
+
+	bool correcto = true;
+	int dia = (fecha[0] - '0')*10 + (fecha[1] - '0');
+	int mes = (fecha[3] - '0')*10 + (fecha[4] - '0');
+	int anho = (fecha[6] - '0')*1000 + (fecha[7] - '0')*100 + (fecha[8] - '0')*10 + (fecha[9] - '0');
+	correcto = validar_fecha(dia,mes,anho);
+	return correcto;
+}
+bool fechamayor(char *f1, char *f2)
+{
+	char d[3],m[3],a[5],d2[3],m2[3],a2[5];
+	bool k=false;
+	d[0]=f1[0];d[1]=f1[1];d[2]='\0';
+	m[0]=f1[3];m[1]=f1[4];m[2]='\0';
+	a[0]=f1[6];a[1]=f1[7];a[2]=f1[8];a[3]=f1[9];a[4]='\0';
+	d2[0]=f2[0];d2[1]=f2[1];d2[2]='\0';
+	m2[0]=f2[3];m2[1]=f2[4];m2[2]='\0';
+	a2[0]=f2[6];a2[1]=f2[7];a2[2]=f2[8];a2[3]=f2[9];a2[4]='\0';
+	if(strcmp(a,a2)>0)
+	{
+		k = true;
+	}
+	if(strcmp(a,a2)==0)
+	{
+		if(strcmp(m,m2)>0)
+		{
+			k=true;
+		}
+		if(strcmp(m,m2)==0)
+		{
+			if(strcmp(d,d2)>=0)
+			{
+				k=true;
+			}
+		}
 	}
 	return k;
 }
+bool fechamenor(char *f1, char *f2)
+{
+	char d[3],m[3],a[5],d2[3],m2[3],a2[5];
+	bool k=false;
+	d[0]=f1[0];d[1]=f1[1];d[2]='\0';
+	m[0]=f1[3];m[1]=f1[4];m[2]='\0';
+	a[0]=f1[6];a[1]=f1[7];a[2]=f1[8];a[3]=f1[9];a[4]='\0';
+	d2[0]=f2[0];d2[1]=f2[1];d2[2]='\0';
+	m2[0]=f2[3];m2[1]=f2[4];m2[2]='\0';
+	a2[0]=f2[6];a2[1]=f2[7];a2[2]=f2[8];a2[3]=f2[9];a2[4]='\0';
+	if(strcmp(a,a2)<0)
+	{
+		k = true;
+	}
+	if(strcmp(a,a2)==0)
+	{
+		if(strcmp(m,m2)<0)
+		{
+			k=true;
+		}
+		if(strcmp(m,m2)==0)
+		{
+			if(strcmp(d,d2)<=0)
+			{
+				k=true;
+			}
+		}
+	}
+	return k;
+}
+bool entrefechas(char *f,char *f1,char *f2)
+{
+	return (fechamenor(f1,f) && fechamayor(f2,f) );
+}
+void leer_fechas(char *f1,char *f2)
+{
+	bool valido;
+	do
+	{
+		do
+		{
+			valido = true;
+			cout<<endl<<"inicio"<<endl;
+			if(!generar_fecha(f1))
+			{
+				cout<<endl<<"error: fecha inicial no valida";
+				valido = false;
+			}
+		}while(!valido);
+		do
+		{
+			valido = true;
+			cout<<endl<<"final"<<endl;
+			if(!generar_fecha(f2))
+			{
+				cout<<endl<<"error: fecha final no valida";
+				valido = false;
+			}
+		}while(!valido);
+		if(fechamenor(f2,f1))
+		{
+			cout<<endl<<"error: fecha final menor o igual que fecha inicial";
+		}
+	}while(fechamenor(f2,f1));
+}
+
 
 //EXISTEN
 bool verif_producto(int p)
@@ -520,6 +804,7 @@ bool verif_venta(int p)
 	}
 	return k;
 }
+
 // OBTENER
 producto obtener_producto(int p)
 {
@@ -621,6 +906,26 @@ venta obtener_venta(int p)
 	}
 	return reg;
 }
+vendedor obtener_vendedor(int p)
+{
+	FILE*ptr;
+	vendedor reg;
+	ptr=fopen("vendedor.dat","rb");
+	if(ptr==NULL)
+	{
+		fread(&reg,sizeof(reg),1,ptr);
+		while((feof(ptr)==false)&&(reg.IdVendedor!=p))
+		{
+			fread(&reg,sizeof(reg),1,ptr);
+		}
+		fclose(ptr);
+	}
+	else
+	{
+		cout << "Error!! El archivo no existe. ";
+	}
+	return reg;
+}
 producto datos_producto()
 {
 	int opcion;
@@ -652,6 +957,71 @@ producto datos_producto()
 				reg.estado='A'; break;
 		}
 	return reg;
+}
+
+
+// AUMENTAR STOCK
+void aumenta_stockProducto(int cantidad,int prod)
+{
+	producto reg;
+	FILE *ptr; 
+	ptr= fopen("producto.dat","r+b");
+	if(ptr!=NULL)
+	{ 
+		fread(&reg,sizeof(reg),1,ptr);
+		while(feof(ptr)==false)
+		{
+			if(reg.IdProd == prod)
+			{
+				reg.stock= reg.stock + cantidad;
+				fseek(ptr,(-1)*sizeof(reg),SEEK_CUR);
+				fwrite(&reg,sizeof(reg),1,ptr);
+				break;
+			}
+			fread(&reg,sizeof(reg),1,ptr);
+		}
+		fclose(ptr);
+	}
+	else
+	{
+		cout <<"El Archivo no existe";
+	}
+}
+bool reducir_stockProducto(int cantidad, int prod)
+{
+	FILE*ptr;
+	producto reg;
+	bool k=true;
+	ptr=fopen("producto.dat","r+b");
+	if(ptr==NULL)
+	{
+		fread(&reg,sizeof(reg),1,ptr);
+		while(feof(ptr)==false)
+		{
+			if(reg.IdProd==prod)
+			{
+				reg.stock= reg.stock - cantidad;
+				if(reg.stock < 0)
+				{
+					k = false;
+					cout<<endl<<"error: insuficiente stock"<<endl;
+					break;
+				}
+				fseek(ptr,sizeof(reg)*(-1),SEEK_CUR);
+				fwrite(&reg,sizeof(reg),1,ptr);
+				break;
+			}
+			fread(&reg,sizeof(reg),1,ptr);
+		
+		}
+		fclose(ptr);
+	}
+	else
+	{
+		cout << "EL archivo no existe! ";
+	}
+	return k;
+
 }
 
 // AÑADIR
@@ -727,7 +1097,7 @@ void vendedor_datos()
 		{
 			gets(reg.telefono);
 		}while(validar_telefono(reg.telefono)==false);
-	}while(verificar_numero(reg.telefono)==false);
+	}while(VerifSoloNumeros(reg.telefono)==false);
 	cout << "E-mail: ";
 	do
 	{
@@ -738,104 +1108,288 @@ void vendedor_datos()
 	fwrite (&reg, sizeof(reg),1,ptr);
 	fclose (ptr);
 }
+void placa(char cad[6])
+{
+	int i,n;
+	bool k;
+	do
+	{
+		do
+		{
+			do
+			{
+				cout<<endl<<"Placa: ";
+				gets(cad);
+				if(strlen(cad)==5)
+				{
+					k=true;
+				}
+				else
+				{
+					if(strlen(cad)==6)
+					{
+						k=true;
+					}
+					else
+					{
+						if(strlen(cad)==7)
+						{
+							k=true;
+						}
+						else
+						{
+							k=false;
+						}
+					}
+				}
+			}while(k==false);
+			i=strlen(cad)-3;
+
+			while(i<strlen(cad) && k==true)
+			{
+				cad[i]=toupper(cad[i]);
+				if(cad[i]>=char(65) && cad[i]<=char(90))
+				{
+					i++;
+				}
+				else
+				{
+					k=false;
+				}
+			}
+
+
+		}while(k==false);
+		k=true;
+		i=0;
+
+		while(i<strlen(cad)-3 && k==true)
+		{
+			if(cad[i]>=char(48) && cad[i]<=char(57)) 
+			{
+				i++;
+			}
+			else
+			{
+				k=false;
+			}
+		}
+
+	}while(k==false);
+
+
+
+	cout<<"Placa: "<<cad;
+}
 void automovil_datos()
 {
 	FILE*ptr;
-	automovil autom;
+	automovil reg;
 	cout << endl;
 	do
 	{
 	cout << "ID automovil: ";
-	cin >> autom.IdAuto;
-	}while(autom.IdAuto<0);
-	cout << "Placa: ";
-	cin >> autom.placa;
+	cin >> reg.IdAuto;
+	}while(reg.IdAuto<0);
+	placa(reg.placa);
 	do
 	{
 	cout << "ID cliente: ";
-	cin >> autom.IdCliente;
-	}while(autom.placa<0);
-	autom.estado='A';
+	cin >> reg.IdCliente;
+	}while(reg.placa<0);
+	reg.estado='A';
 	ptr=fopen("automovil.dat","ab");
-	fwrite(&autom,sizeof(autom),1,ptr);
+	fwrite(&reg,sizeof(reg),1,ptr);
 	fclose (ptr);
 }
+//ID
+int ID_vendedor()
+{
+	int n;
+	char cad[N],op;
+	bool k;
+	do
+	{
+		k=true;
+		do
+		{
+			do
+			{
+				cout<<endl<<"Ingresar Id del Vendedor: ";
+				gets(cad); 
+			}while(strlen(cad)==0);
+		}while(VerifSoloNumeros(cad)==false);
+		n=atoi(cad);
+		if(verif_vendedor(n)==false)
+		{
+			cout<<"Id Vendedor "<<n<<" no existe: " << endl;
+			cout<< "desea registrar nuevo vendedor? <s/n> ";
+			cin >> op;
+			if((op=='S')||(op=='s'))
+			{
+				vendedor_datos();
+			}
+			k=false;
+		}
+	}while(k==false);
+	return(n);
+}
+int ID_producto()
+{
+	int n;
+	char cad[N],op;
+	bool k;
+	do
+	{
+		k=true;
+		do
+		{
+			do
+			{
+				cout<<endl<<"Ingresar Id del producto: ";
+				gets(cad); 
+			}while(strlen(cad)==0);
+		}while(VerifSoloNumeros(cad)==false);
+		n=atoi(cad);
+		if(verif_producto(n)==false)
+		{
+			cout<<"Id producto "<<n<<" no existe: " <<endl;
+			cout<< "Desea registrar nuevo producto? <s/n> ";
+			cin >> op;
+			if((op=='S')||(op=='s'))
+			{
+				producto_datos();
+			}
+			k=false;
+		}
+	}while(k==false);
+	return n;
+}
+int ID_prod()
+{
+	int op;
+	char p[2];
+	bool k;
+	do
+	{
+		cout<<endl<<"Ingrese un producto: ";
+		
+			cout<<endl<<"1. Gasolina Especial";
+		
+		if(verif_producto(2)==true)
+		{
+			cout<<endl<<"2. Gasolina Premium";
+		}
+		if(verif_producto(3)==true)
+		{
+			cout<<endl<<"3. Diesel";
+		}
+		if(verif_producto(4)==true)
+		{
+			cout<<endl<<"4. Gas";
+		}
+		cout<<endl<<"Seleccione: ";
+
+		do
+		{ 
+			gets(p);
+
+		}while(strlen(p)==0);
+
+		if(VerifSoloNumeros(p)==false || verif_producto( atoi(p) )==true) //atoi:convierte una cadena en su valor numerico (entero)
+		{
+			k=true;
+		}
+
+	}while(k=false);
+	op=atoi(p);
+	return(op);
+}
+
 void bomba_datos ()
 {
 	FILE*ptr;
-	bomba bom;
+	bomba reg;
 	do
 	{
 	cout <<"ID bomba: ";
-	cin >> bom.IdBomba;
-	}while(bom.IdBomba<0);
+	cin >> reg.IdBomba;
+	}while(reg.IdBomba<0);
 	cout << "Descripcion: ";
-	cin >> bom.descripcion;
-	bom.estado ='A';
+	cin >> reg.descripcion;
+	reg.IdVendedor=ID_vendedor();
+	reg.IdProd=ID_producto();
+	reg.estado ='A';
 	ptr=fopen("bomba.dat","ab");
-	fwrite(&bom,sizeof(bom),1,ptr);
+	fwrite(&reg,sizeof(reg),1,ptr);
 	fclose (ptr);
 }
 void compra_datos()
 {
 	FILE*ptr;
-	compra comp;
+	compra reg;
 	cout << endl;
 	do
 	{
 	cout << "ID compra: ";
-	cin >> comp.IdCompra;
-	}while (comp.IdCompra<0);
-	//COMPLICADO!!!!!!!!
+	cin >> reg.IdCompra;
+	}while (reg.IdCompra<0);
 	cout << "Fecha: ";
-	cin >> comp.fecha;
+	cin >> reg.fecha;
 	do
 	{
 	cout << "Cantidad: ";
-	cin >> comp.cantidad;
-	}while (comp.cantidad<0);
-	cout << "ID prod: ";
-	cin >> comp.IdProd;
-	comp.IdProd='A';
+	cin >> reg.cantidad;
+	}while (reg.cantidad<0);
+	reg.IdProd=ID_prod();
+	aumenta_stockProducto(reg.cantidad,reg.IdProd);
+	reg.IdProd='A';
 	ptr=fopen("compra.dat","ab");
-	fwrite(&comp,sizeof(comp),1,ptr);
+	fwrite(&reg,sizeof(reg),1,ptr);
 	fclose (ptr);
 }
 void venta_datos()
 {
 	FILE*ptr;
-	venta ven;
+	venta reg;
 	cout << endl;
 	do
 	{
 	cout << "ID venta: ";
-	cin >> ven.IdVenta;
-	}while(ven.IdVenta<0);
+	cin >> reg.IdVenta;
+	}while(reg.IdVenta<0);
 	cout << "Fecha: ";
-	cin >> ven.fecha;
+	cin >> reg.fecha;
 	do
 	{
-	cout << "Cantidad: ";
-	cin >> ven.cantidad;
-	}while (ven.cantidad<0);
+		do
+		{
+			cout << "Cantidad: ";
+			cin >> reg.cantidad;
+		}while (reg.cantidad<0);
+	}while(reducir_stockProducto(reg.cantidad,reg.IdProd)==false);
 	do
 	{
-	cout << "Precio unitario: ";
-	cin >> ven.precioUnitario;
-	}while (ven.precioUnitario<0);
-	do
-	{
+		cout << "Precio unitario: ";
+		cin >> reg.precioUnitario;
+	}while (reg.precioUnitario<0);
+	
 	cout << "ID bomba: ";
-	cin >> ven.IdBomba;
-	}while (ven.IdBomba<0);
+	do
+	{
+		cin >> reg.IdBomba;
+	}while (verif_bomba(reg.IdBomba)==false);
 	do
 	{
 	cout << "Id auto: ";
-	cin >> ven.IdAuto;
-	}while (ven.IdAuto<0);
-	ven.estado='A';
+	do
+	{
+		cin >> reg.IdAuto;
+	}while(verif_automovil(reg.IdAuto)==false);
+	}while (reg.IdAuto<0);
+	reg.estado='A';
 	ptr= fopen("venta.dat","ab");
-	fwrite (&ven,sizeof(ven),1,ptr);
+	fwrite (&reg,sizeof(reg),1,ptr);
 	fclose (ptr);
 }
 
@@ -1180,7 +1734,7 @@ void bomba_eliminar(int nroReg)
 		{
 			if(reg.estado=='A')
 			{
-				cout << reg.IdBomba << "		" << reg.descripcion << "		" << reg.IdProd << "		" << reg.IdVenta << endl;
+				cout << reg.IdBomba << "		" << reg.descripcion << "		" << reg.IdProd << "		" << reg.IdVendedor << endl;
 				cout << "Desea eliminar este registro? <s/n> ";
 				cin >>op;
 				if ((op=='S')||(op=='s'))
@@ -1251,7 +1805,6 @@ void venta_eliminar(int nroReg)
 	}
 
 }
-
 
 // MOSTRAR
 void producto_mostrar()
@@ -1373,7 +1926,7 @@ void bomba_mostrar()
 {
 	bomba reg;
 	producto regprod;
-	venta regventa;
+	vendedor regvendedor;
 	int c=0;
 	FILE*ptr;
 	ptr=fopen("bomba.dat","rb");
@@ -1388,9 +1941,9 @@ void bomba_mostrar()
 		while(feof(ptr)==false)
 		{
 			regprod=obtener_producto(reg.IdProd);
-			regventa=obtener_venta(reg.IdVenta);
+			regvendedor=obtener_vendedor(reg.IdVendedor);
 			c++;
-			cout << endl << c << "	" << reg.IdBomba << "	" << reg.descripcion << "	" << regprod.IdProd << "	" <<regventa.IdVenta << endl;
+			cout << endl << c << "	" << reg.IdBomba << "	" << reg.descripcion << "	" << regprod.IdProd << "	" <<regvendedor.IdVendedor << endl;
 			fread(&reg,sizeof(reg),1,ptr);
 		}
 		fclose(ptr);
@@ -1544,7 +2097,10 @@ void cliente_modificar(int nroReg)
 					cout << "Ingrese el E-mail: ";
 					do
 					{
-						cin >> reg.email;
+						do
+						{
+							cin >> reg.email;
+						}while(strlen(reg.email)==0);
 					}while (validar_email(reg.email)==false);
 					fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
 					fwrite(&reg,sizeof(reg),1,ptr);
@@ -1628,13 +2184,18 @@ void automovil_modificar(int nroReg)
 					{
 						cin >> reg.IdAuto;
 					}while(reg.IdAuto<99);
-					cout << "Ingrese la placa: ";
-					cin >> reg.placa;
+					do
+					{
+					placa(reg.placa);
+					}while(verif_placa(reg.placa)==false);
 					cout << "Ingrese el ID del cliente: ";
 					do
 					{
+						do
+						{
 						cin >> reg.IdCliente;
-					}while(reg.IdCliente<99);
+						}while(reg.IdCliente<99);
+					}while(verif_automovil(reg.IdCliente)==false);
 					fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
 					fwrite(&reg,sizeof(reg),1,ptr);
 				}
@@ -1657,7 +2218,7 @@ void bomba_modificar(int nroReg)
 		{
 			if(reg.estado=='A')
 			{
-				cout << reg.IdBomba << "		" << reg.descripcion << "		" << reg.IdProd << "		" << reg.IdVenta << endl;
+				cout << reg.IdBomba << "		" << reg.descripcion << "		" << reg.IdProd << "		" << reg.IdVendedor << endl;
 				cout << "Desea eliminar este registro? <s/n> ";
 				cin >> op;
 				if((op=='s')||(op=='S'))
@@ -1666,10 +2227,8 @@ void bomba_modificar(int nroReg)
 					cin >> reg.IdBomba;
 					cout << "Ingrese la descripcion: ";
 					cin >> reg.descripcion;
-					cout << "Ingrese el ID del producto: ";
-					cin >> reg.IdProd;
-					cout << "Ingrese el ID de la venta: ";
-					cin >> reg.IdVenta;
+					reg.IdProd=ID_producto();
+					reg.IdVendedor=ID_vendedor();
 					fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
 					fwrite(&reg,sizeof(reg),1,ptr);
 				}
@@ -1703,8 +2262,7 @@ void compra_modificar(int nroReg)
 					cin >> reg.fecha;
 					cout << "Ingrese la cantidad: ";
 					cin >> reg.cantidad;
-					cout << "Ingrese el IdProd: ";
-					cin >> reg.IdProd;
+					reg.IdProd=ID_prod();
 					fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
 					fwrite(&reg,sizeof(reg),1,ptr);;
 				}
@@ -1753,10 +2311,7 @@ void venta_modificar(int nroReg)
 
 //REPORTE
 
-
 // MENU
-
-
 void menu_producto()
 {
 	int opcion,op,num;
@@ -2057,3 +2612,4 @@ void main()
 	}while (opcion!=0);
 getch();
 }
+
