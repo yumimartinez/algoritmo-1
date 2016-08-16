@@ -1,0 +1,202 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int contar_digitos(int n)
+{
+	int c=0;
+	while(n>0)
+	{
+		n=n/10;
+		c++;
+	}
+	return c;
+}
+
+int sumar_digitos(int n)
+{
+	int sum=0,d;
+	while(n>0)
+	{
+		d=n%10;
+		sum=sum+d;
+		n=n/10;
+		
+	}
+	return sum;
+}
+
+//Dado un numero natural invertir
+int invertir_numero(int n)
+{
+	int d,s=0;
+	while(n>0)
+	{
+		d=n%10;
+		n=n/10;
+		s=(s*10)+d;
+	}
+	return s;
+}
+//Dado un numero sumar los primos
+bool verif_primo(int n)
+{
+	bool k=true;
+	int i;
+	for (i=2;i<n;i++)
+	{
+		if(n%i==0)
+		{
+			k=false;
+		}
+	}
+	return k;
+}
+
+int sumar_primos(int n)
+{
+	int s=0,d;
+	while(n>0)
+	{
+		d=n%10;
+		n=n/10;
+		if(verif_primo(d)==true)
+		{
+			s=s+d;
+		}
+	}
+	return s;
+}
+
+int concatenar_numeros(int n1, int n2)
+{
+	int c=0,d,p;
+	c=n2;
+	p=invertir_numero(c);
+	while(n1>0)
+	{
+		d=n1%10;
+		n1=n1/10;
+		p=(p*10)+d;
+	}
+	return (invertir_numero(p));
+}
+
+//agregar libreria-> #include <math.h>
+// int concatenar (int a,int b)
+// {
+//		return(a*powf(10,contar_digitos(b)+b);
+//}
+
+bool orden_ascendente(int n)
+{
+	bool k=true;
+	int digant=n%10, digact,d;
+	d=n/10;
+	while(n>0)
+	{
+		digact=d%10;
+		if(digact>digant)
+		{
+			k=false;
+		}
+		digant=digant;
+		n=n/10;
+	}
+	return k;
+}
+
+void main()
+{
+	int a,b,opcion;
+	do
+	{
+
+		cout << "-----------------------------" << endl;
+		cout << "1. Contar digitos" << endl;
+		cout << "2. Sumar digitos " << endl;
+		cout << "3. Invertir numero " << endl;
+		cout << "4. Sumar numero primos " << endl;
+		cout << "5. Concatenar numeros " << endl;
+		cout << "6. Verificar orden ascendente " << endl;
+		cout << "0. salir " << endl;
+		cout << "Ingrese una opcion: ";
+		cin >> opcion;
+
+		switch(opcion)
+		{
+		case 1: 
+			do
+			{
+				cout <<"Ingrese el numero: ";
+				cin >> a;
+				if(a<=0)
+				{
+					cout << "Debe introducir numeros naturales....Los numeros naturales son mayor o igual a 1 "<< endl;
+				}
+			}while (a<=0);
+				cout << "El numero tiene " << contar_digitos(a) << " digitos"<< endl; break;
+		case 2:
+			do
+			{
+				cout <<"Ingrese el numero: ";
+				cin >> a;
+				if(a<=0)
+				{
+					cout << "Debe introducir numeros naturales....Los numeros naturales son mayor o igual a 1 "<< endl;
+				}
+			}while (a<=0);
+				cout  << "La suma de digitos es: " << sumar_digitos(a)<< endl; break;
+		case 3: 
+			do
+			{	
+				cout <<"Ingrese el numero: ";
+				cin >> a;
+				if(a<=0)
+				{
+					cout << "Debe introducir numeros naturales....Los numeros naturales son mayor o igual a 1 "<< endl;
+				}
+			}while (a<=0);
+				cout << "El numero invertido es: " << invertir_numero(a) << endl; break;
+		case 4: 
+			do
+			{
+				cout <<"Ingrese el numero: ";
+				cin >> a;
+				if(a<=0)
+				{
+					cout << "Debe introducir numeros naturales....Los numeros naturales son mayor o igual a 1 "<< endl;
+				}
+			}while (a<=0);
+			cout << "La suma de los numeros primos es: " << sumar_primos(a) << endl; break;
+		case 5:
+			cout << "Ingrese el primer numero: " << endl;
+			cin >> a;
+			cout << "Ingrese el segundo numero: " << endl;
+			cin >> b;
+			cout << "La concatenacion es: " << concatenar_numeros(a,b) << endl; break;
+		case 6:
+			do
+			{
+				cout <<"Ingrese el numero: ";
+				cin >> a;
+				if(a<=0)
+				{
+					cout << "Debe introducir numeros naturales....Los numeros naturales son mayor o igual a 1 "<< endl;
+				}
+			}while (a<=0);
+			if(orden_ascendente(a)==true)
+			{
+				cout << "Verdadero " << endl;
+			}
+			else
+			{
+				cout << "Falso " << endl;
+			}
+		case 0: cout << "SALIR" << endl; break;
+		}
+	}while (opcion!=0);
+
+	getch();
+}
